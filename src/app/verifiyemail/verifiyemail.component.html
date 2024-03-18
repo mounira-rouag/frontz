@@ -1,0 +1,33 @@
+<section class="contact_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="contact-form border" style="padding: 20px; border-radius: 5px;">
+            <div class="heading_container">
+              <h2>Change Password</h2>
+            </div>
+            <form #verifiyemail="ngForm"  (ngSubmit)="verifyEmail(verifiyemail.value.email) ">
+              <div class="form-group">
+                <input type="email" placeholder="Enter Email" class="form-control" ngModel name="email" required/>
+              </div>
+              <div class="btn-box">
+                <button type="submit" [disabled]="!verifiyemail.valid">Submit</button>
+              </div>
+            </form>
+            <br>
+            <br>
+            <div *ngIf="errorMessage && isfailed" class="alert alert-danger alert-dismissed fade show" role="alert">
+                Failed: {{ errorMessage }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <div *ngIf="sucessMessage " class="alert alert-success " role="alert">
+               User Added sucessfully
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  

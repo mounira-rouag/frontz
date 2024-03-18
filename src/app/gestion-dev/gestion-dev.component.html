@@ -1,0 +1,124 @@
+<div class="search-container">
+  <div class="row-container">
+  <div class="s009">
+    <form>
+      <div class="inner-form">
+       
+        <div class="advance-search row justify-content-start ">
+          <h2>Search</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="idmarque">Marque:</label>
+                <select data-trigger="" id="idmarque" name="choices-single-defaul1" [(ngModel)]="selectedMarque" class="form-select" >
+                  <option placeholder="" value="">Marque</option>
+                  <option *ngFor="let marque of marques" [value]="marque.idMarque">{{ marque.nomMarque }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="idmaj">Version:</label>
+                <select data-trigger="" id="idmaj" [(ngModel)]="selectedmaj" name="choices-single-defaul2" class="form-select">
+                  <option placeholder="" value="">Version</option>
+                  <option *ngFor="let maj of majs" [value]="maj.idMaj">{{maj.nomMaj}}</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="choices-single-defaul4">Sites:</label>
+                <select data-trigger="" name="choices-single-defaul4" [(ngModel)]="selectedSite" class="form-select">
+                  <option placeholder="" value="">Site</option>
+                  <option *ngFor="let site of sites" [value]="site.idSite">{{site.nomSite }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="choices-single-defaul6">Model:</label>
+                <select data-trigger="" name="choices-single-defaul6" [(ngModel)]="selectemodel" class="form-select">
+                  <option placeholder="" value="">model</option>
+                  <option *ngFor="let Veh of Vehicules" [value]="Veh.codeVeh">{{Veh. nomVeh}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row ">
+            <div class="input-field">
+
+              <div class="hstack gap-3">
+                <button class="btn-delete p-2" id="delete">RESET</button>
+                <button class="btn-search" (click)="searchDevsByFilters()">SEARCH</button>
+               
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </form> 
+  </div>
+  
+  </div>
+  <div class="container">
+    <div class="table-box">
+      <h2>Résultats</h2>
+      <table class="table">
+        <thead class="black white-text">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Dev Name</th>
+            <th scope="col">Dev Status</th>
+            <th scope="col">ref cdc</th>
+            <th scope="col">Cdc name</th>
+            <th scope="col">DLL</th>
+            <th scope="col">Family</th>
+            <th scope="col">Ecu Name</th>
+            <th scope="col">Bug</th>
+            <th scope="col">Developer</th>
+            <th scope="col">Jira</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dev of devs | slice: (pageEvent?.pageIndex || 0) * pageSize : (pageEvent?.pageIndex || 0) * pageSize + pageSize " >
+            <td>{{ dev.id }}</td>
+            <td>{{ dev.devname }}</td>
+            <td>{{ dev.etatdev.nomEtatDev}}</td>
+            <td>{{ dev.cdc.refCdc}}</td>
+            <td>{{ dev.cdc.nomCdc }}</td>
+            <td>{{ dev.dll }}</td>
+            <td>{{ dev.ecu.famille.descrAnglais }}</td>
+            <td>{{ dev.ecu.nomEcu }}</td>
+            <td>{{ dev.numBug }}</td>
+            <td>{{ dev.user }}</td>
+           
+
+          </tr>
+        </tbody>
+      </table>
+  
+      <mat-paginator [length]="devs.length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="pageEvent = $event">
+      </mat-paginator>
+    </div>
+  </div>
+  <div class="conatiner">
+  
+      <div class="input-field">
+
+        <div class="hstack gap-3">
+          <button class="btn-delete p-2" id="delete">RESET</button>
+          <button class="btn-search" (click)="searchDevsByFilters()">SEARCH</button>
+         
+        </div>
+      
+    </div>
+  </div>
+  
+</div>

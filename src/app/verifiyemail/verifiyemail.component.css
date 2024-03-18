@@ -1,0 +1,12 @@
+.bordered-form {
+    border: 1px solid #ddd; /* Adjust border thickness, color, and style as needed */
+    padding: 20px; /* Adjust padding if needed */
+    border-radius: 5px; /* Add rounded corners if desired */
+    background-color: #ffffff ;
+  }
+  .contact_section {
+    background-color: rgb(220,220,220); /* Set your desired background color */
+  }
+  .contact-form {
+    background-color: #ffffff;
+  }
