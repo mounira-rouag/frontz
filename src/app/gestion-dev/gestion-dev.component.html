@@ -65,8 +65,8 @@
   
   </div>
   <div class="container">
-    <div class="table-box">
-      <h2>Résultats</h2>
+    <div class="table table-hover ">
+      <h2>Results</h2>
       <table class="table">
         <thead class="black white-text">
           <tr>
@@ -82,8 +82,23 @@
             <th scope="col">Developer</th>
             <th scope="col">Jira</th>
           </tr>
+          
         </thead>
         <tbody>
+          <tr>
+            <td><input class="form-control" type="number"   (keyup)="filterDevs()" [(ngModel)]="id"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+            <td><input class="form-control"  (keyup)="filterDevs()"></td>
+          </tr>
+
           <tr *ngFor="let dev of devs | slice: (pageEvent?.pageIndex || 0) * pageSize : (pageEvent?.pageIndex || 0) * pageSize + pageSize " >
             <td>{{ dev.id }}</td>
             <td>{{ dev.devname }}</td>
@@ -94,9 +109,8 @@
             <td>{{ dev.ecu.famille.descrAnglais }}</td>
             <td>{{ dev.ecu.nomEcu }}</td>
             <td>{{ dev.numBug }}</td>
-            <td>{{ dev.user }}</td>
-           
-
+            <td>{{ dev.user}}</td>
+            <td>{{ dev.user}}</td>
           </tr>
         </tbody>
       </table>
@@ -108,17 +122,37 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="conatiner">
-  
+  <div class=" row conatiner">
+  <div class="container">
       <div class="input-field">
-
-        <div class="hstack gap-3">
-          <button class="btn-delete p-2" id="delete">RESET</button>
-          <button class="btn-search" (click)="searchDevsByFilters()">SEARCH</button>
-         
+        <div class="container text-center">
+          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div class="col">
+              <div class="p-3">
+                <button class="btn-search" *ngIf="showAdminBoard" >Duplicate Dev</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="p-3">{{devs.length}} development(s) was found</div>
+            </div>
+            <div class="col">
+              <div class="p-3">
+                <button class="btn-search" >Export to excel list</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="p-3">
+                <button class="btn-search" *ngIf="showAdminBoard" >Add Dev</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="p-3">
+                <button class="btn-search"  >Show Details</button>
+              </div>
+            </div>
+          </div>
         </div>
-      
+      </div>
     </div>
-  </div>
-  
+  </div> 
 </div>

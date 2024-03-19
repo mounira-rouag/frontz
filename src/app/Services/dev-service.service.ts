@@ -29,20 +29,22 @@ const httpOptions = {
       findDevsByUser(userId: number): Observable<any[]> {
         return this.http.get<any[]>(`${environment.apiUrl}/dev/user/${userId}`);
       }
-    
+      findDevsByVersion(idmaj: number): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/dev/maj-version/${idmaj}`, { responseType: 'json' });
+      }
       
 
-      findDevsByCriteria(marqueId: number, userId: number, siteId?: number, codeVeh?:number ): Observable<Dev[]> {
+      findDevsByCriteria(marqueId: number, idmaj: number, siteId?: number, codeVeh?:number ): Observable<Dev[]> {
         // Combine multiple observables using forkJoin
         const devStreams: Observable<Dev[]>[] = [];
       
         if (marqueId) {
           devStreams.push(this.findDevsByMarque(marqueId));
-          console.log("req findby marqyes");
+         
         }
       
-        if (userId) {
-          devStreams.push(this.findDevsByUser(userId));
+        if (idmaj) {
+          devStreams.push(this.findDevsByVersion(idmaj));
         }
       
         if (siteId) {

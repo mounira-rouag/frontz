@@ -26,6 +26,8 @@ import { SiteService } from '../Services/sites-service.service';
   styleUrls: ['./gestion-dev.component.css']
 })
 export class GestionDevComponent {
+  filters: any;
+  showAdminBoard: any;
 onMarqueChange($event: any) {
 throw new Error('Method not implemented.');
 }
@@ -39,8 +41,8 @@ throw new Error('Method not implemented.');
   selectemodel: any;
   idmaj:number =4;
   pageSize: number = 10; 
-
-
+  searchcritiria:any;
+  debounceTimeout:any;
   dll: string='';
   numberdev:number=0;
   id:number=0;
@@ -52,6 +54,10 @@ throw new Error('Method not implemented.');
   Vehicules:Vehicule[]=[];
   showTable: any;
   pageEvent: PageEvent = new PageEvent;
+  filteredDevs!: Dev[];
+  filterId = '';
+  showModeratorBoard = false;
+  private roles: string[] = [];
   @ViewChild('dllInput') dllInput: any;
   
   constructor(private authService: UserServiceService,
@@ -63,15 +69,14 @@ throw new Error('Method not implemented.');
      private marqueService:  MarqueService,
      private siteService:  SiteService,
      private majService: MajService) { }
-  
-  ngOnInit():void {
 
-    const filters = {
-      marque: this.selectedMarque,
-      version: this.selectedmaj,
-      site: this.selectedSite,
-      model: this.selectemodel,
-    };
+
+  ngOnInit():void {
+    const user = this.storageService.getUser();
+      this.roles = user.roles;
+     
+    this.showAdminBoard = this.roles.includes('ROLE_ADMIN')
+
   
   this.marqueService.getAllMarques().subscribe(
     (data:Marque[])=>{
@@ -99,7 +104,7 @@ throw new Error('Method not implemented.');
       console.log("error",error);
     }
   );
-
+/** 
   this.authService.getUsersByProfile().subscribe(
     (data3:User[])=>{
       this.users=data3;
@@ -107,7 +112,7 @@ throw new Error('Method not implemented.');
     (error: any)=>{
       console.log("error",error);
     }
-  );
+  );*/
   
   /*
 
@@ -139,19 +144,21 @@ throw new Error('Method not implemented.');
     }
   );
   }
+alldevs=this.devService.getAllDev;
+filterDevs() {
+  this.filteredDevs = this.devs.filter((dev) => {
+    let include = true;
+    for (const key in this.filters) {
+      if (this.filters.hasOwnProperty(key)) {
+        const filterValue = this.filters[key].toString().toLowerCase(); 
+        const devValue = dev?.id?.toString().toLowerCase() || ''; 
 
-  searchDevs() {
-    console.log("this is dll :", this.dll);
-    if (this.dll) {
-    
-      this.devService.getDevsByDll(this.dll)
-        .subscribe(devs => this.devs = devs);
-    // Handle potential errors here (optional)
-    } else {
-      console.log("failed" );
-      // Handle empty search input (optional)
+        include = include && (devValue.includes(filterValue) || filterValue === ''); 
+      }
     }
-  }
+    return include;
+  });
+}
 
   searchDevs2() {
     if (this.id) {
@@ -180,7 +187,7 @@ throw new Error('Method not implemented.');
     
     this.devService.findDevsByCriteria(marqueId, siteId,userId,modelCode).subscribe(
       (data4: Dev[]) => {
-        // Handle the fetched developers here
+       
         this.devs=data4;
        
         
